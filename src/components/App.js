@@ -6,9 +6,9 @@ import Filter from './Filter';
 // import ContactList from './components/ContactList';
 
 class App extends Component {
-  //   state = {
-  //     contacts: [],
-  //   };
+  // state = {
+  //   contacts: [],
+  // };
 
   //   componentDidMount() {
   //     const contacts = localStorage.getItem('contacts');
@@ -25,17 +25,17 @@ class App extends Component {
   //     }
   //   }
 
-  //   handleAddContact = ({ id, name, number }) => {
-  //     const contact = {
-  //       id,
-  //       name,
-  //       number,
-  //     };
-
-  //     this.setState(({ contacts }) => ({
-  //       contacts: [contact, ...contacts],
-  //     }));
+  // handleAddContact = ({ id, name, number }) => {
+  //   const contact = {
+  //     id,
+  //     name,
+  //     number,
   //   };
+
+  //   this.setState(({ contacts }) => ({
+  //     contacts: [contact, ...contacts],
+  //   }));
+  // };
 
   //   handleDeleteContact = e => {
   //     const { id } = e.currentTarget;
@@ -45,15 +45,15 @@ class App extends Component {
   //     }));
   //   };
 
-  //   handleCheckUniqueContact = ({ name }) => {
-  //     const { contacts } = this.state;
+  // handleCheckUniqueContact = ({ name }) => {
+  //   const { contacts } = this.state;
 
-  //     const isExistContact = !!contacts.find(contact => contact.name === name);
+  //   const isExistContact = !!contacts.find(contact => contact.name === name);
 
-  //     isExistContact && alert('Contact is already exist!');
+  //   isExistContact && alert('Contact is already exist!');
 
-  //     return !isExistContact;
-  //   };
+  //   return !isExistContact;
+  // };
 
   //   getFilteredContacts = () => {
   //     const { filter, contacts } = this.state;
@@ -67,6 +67,7 @@ class App extends Component {
   //   };
 
   render() {
+    // console.log(this.state.contacts);
     // const filteredContacts = this.getFilteredContacts();
 
     return (
@@ -74,8 +75,8 @@ class App extends Component {
         <h1>Phonebook</h1>
         <Section>
           <ContactForm
-          //onAdd={this.handleAddContact}
-          //onCheckContact={this.handleCheckUniqueContact}
+          // onAdd={this.handleAddContact}
+          //  onCheckContact={this.handleCheckUniqueContact}
           />
         </Section>
 

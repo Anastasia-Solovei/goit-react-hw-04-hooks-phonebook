@@ -27,27 +27,24 @@ export default function ContactForm({ onAdd, onCheckContact }) {
     }
   };
 
-  //   const handleSubmit = e => {
-  //     e.preventDefault();
+  // const handleSubmit = e => {
+  //   e.preventDefault();
 
-  //     const isValidatedForm = onCheckContact(name);
+  //   const isValidatedForm = onCheckContact(name);
 
-  //     if (!isValidatedForm) {
-  //       return;
-  //     }
+  //   if (!isValidatedForm) {
+  //     return;
+  //   }
 
-  //     isValidatedForm && onAdd({ id: uuidv4(), name: name, number: number });
+  //   isValidatedForm && onAdd({ id: uuidv4(), name: name, number: number });
 
-  //     reset();
-  //   };
+  //   reset();
+  // };
 
-  //   const reset = () => {
-  //     //     this.setState({
-  //     //       filter: '',
-  //     setName('');
-  //     setNumber('');
-  //     //     });
-  //   };
+  // const reset = () => {
+  //   setName('');
+  //   setNumber('');
+  // };
 
   return (
     <form
