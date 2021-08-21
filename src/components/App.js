@@ -1,95 +1,75 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 import Section from './Section';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
-// import ContactList from './components/ContactList';
+import ContactList from './ContactList';
 
-class App extends Component {
-  // state = {
-  //   contacts: [],
-  // };
+export default function App() {
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
+  });
+  const [filter, setFilter] = useLocalStorage('filter', '');
 
-  //   componentDidMount() {
-  //     const contacts = localStorage.getItem('contacts');
-  //     const parsedContacts = JSON.parse(contacts);
+  useEffect(() => {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  });
 
-  //     if (parsedContacts) {
-  //       this.setState({ contacts: parsedContacts });
-  //     }
-  //   }
+  const handleAddContact = contact => {
+    setContacts(prevState => {
+      return [contact, ...prevState];
+    });
+  };
 
-  //   componentDidUpdate(prevState) {
-  //     if (this.state.contacts !== prevState.contacts) {
-  //       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //     }
-  //   }
+  const handleDeleteContact = e => {
+    const { id } = e.target;
 
-  // handleAddContact = ({ id, name, number }) => {
-  //   const contact = {
-  //     id,
-  //     name,
-  //     number,
-  //   };
+    setContacts(prevState => {
+      return prevState.filter(contact => contact.id !== id);
+    });
+  };
 
-  //   this.setState(({ contacts }) => ({
-  //     contacts: [contact, ...contacts],
-  //   }));
-  // };
+  const handleCheckUniqueContact = name => {
+    const isExistContact = !!contacts.find(contact => contact.name === name);
 
-  //   handleDeleteContact = e => {
-  //     const { id } = e.currentTarget;
+    isExistContact && alert('Contact is already exist!');
 
-  //     this.setState(prevState => ({
-  //       contacts: prevState.contacts.filter(contact => contact.id !== id),
-  //     }));
-  //   };
+    return !isExistContact;
+  };
 
-  // handleCheckUniqueContact = ({ name }) => {
-  //   const { contacts } = this.state;
+  const handleFilterChange = e => {
+    const { value } = e.target;
 
-  //   const isExistContact = !!contacts.find(contact => contact.name === name);
+    setFilter(value);
+  };
 
-  //   isExistContact && alert('Contact is already exist!');
-
-  //   return !isExistContact;
-  // };
-
-  //   getFilteredContacts = () => {
-  //     const { filter, contacts } = this.state;
-  //     const normalizedFilter = filter.toLowerCase();
-
-  //     const filteredContacts = contacts.filter(contact =>
-  //       contact.name.toLowerCase().includes(normalizedFilter),
-  //     );
-
-  //     return filteredContacts;
-  //   };
-
-  render() {
-    // console.log(this.state.contacts);
-    // const filteredContacts = this.getFilteredContacts();
-
-    return (
-      <>
-        <h1>Phonebook</h1>
-        <Section>
-          <ContactForm
-          // onAdd={this.handleAddContact}
-          //  onCheckContact={this.handleCheckUniqueContact}
-          />
-        </Section>
-
-        <Section title={'Contacts'}>
-          <Filter />
-          {/* <ContactList
-            contacts={filteredContacts}
-            onDeleteContact={this.handleDeleteContact}
-          /> */}
-        </Section>
-      </>
+  const getFilteredContacts = () => {
+    const normalizedFilter = filter.toLowerCase();
+    const filteredContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
     );
-  }
-}
 
-export default App;
+    return filteredContacts;
+  };
+
+  return (
+    <>
+      <h1>Phonebook</h1>
+      <Section>
+        <ContactForm
+          onAdd={handleAddContact}
+          onCheckContact={handleCheckUniqueContact}
+        />
+      </Section>
+
+      <Section title={'Contacts'}>
+        <Filter value={filter} onChange={handleFilterChange} />
+        <ContactList
+          contacts={getFilteredContacts()}
+          onDeleteContact={handleDeleteContact}
+        />
+      </Section>
+    </>
+  );
+}

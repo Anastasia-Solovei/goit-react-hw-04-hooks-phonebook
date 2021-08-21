@@ -1,6 +1,7 @@
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from '../../hooks/useLocalStorage';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
 
 export default function ContactForm({ onAdd, onCheckContact }) {
@@ -27,30 +28,21 @@ export default function ContactForm({ onAdd, onCheckContact }) {
     }
   };
 
-  // const handleSubmit = e => {
-  //   e.preventDefault();
+  const handleSubmit = e => {
+    e.preventDefault();
 
-  //   const isValidatedForm = onCheckContact(name);
+    const isValidatedForm = onCheckContact(name);
+    if (!isValidatedForm) {
+      return;
+    }
 
-  //   if (!isValidatedForm) {
-  //     return;
-  //   }
-
-  //   isValidatedForm && onAdd({ id: uuidv4(), name: name, number: number });
-
-  //   reset();
-  // };
-
-  // const reset = () => {
-  //   setName('');
-  //   setNumber('');
-  // };
+    isValidatedForm && onAdd({ id: uuidv4(), name: name, number: number });
+    setName('');
+    setNumber('');
+  };
 
   return (
-    <form
-      className={s.ContactForm}
-      //onSubmit={handleSubmit}
-    >
+    <form className={s.ContactForm} onSubmit={handleSubmit}>
       <div className={s.InputOverlay}>
         <label className={s.InputLabel} htmlFor={nameInputId}>
           Name
@@ -92,7 +84,7 @@ export default function ContactForm({ onAdd, onCheckContact }) {
   );
 }
 
-// ContactForm.propTypes = {
-//   onAdd: PropTypes.func.isRequired,
-//   onCheckContact: PropTypes.func.isRequired,
-// };
+ContactForm.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+  onCheckContact: PropTypes.func.isRequired,
+};

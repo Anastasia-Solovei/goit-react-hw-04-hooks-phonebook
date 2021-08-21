@@ -1,24 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import s from './Filter.module.css';
+import PropTypes from 'prop-types';
 
-export default function Filter() {
-  const [filter, setFilter] = useLocalStorage('filter', '');
-
+const Filter = ({ value, onChange }) => {
   const filterInputId = uuidv4();
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-
-    switch (name) {
-      case 'filter':
-        setFilter(value);
-        break;
-
-      default:
-        return;
-    }
-  };
 
   return (
     <div className={s.InputOverlay}>
@@ -29,10 +14,17 @@ export default function Filter() {
         className={s.FilterInput}
         type="text"
         name="filter"
-        value={filter}
-        onChange={handleChange}
+        value={value}
+        onChange={onChange}
         id={filterInputId}
       ></input>
     </div>
   );
-}
+};
+
+Filter.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+export default Filter;
