@@ -7,14 +7,17 @@ import Filter from './Filter';
 import ContactList from './ContactList';
 
 export default function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
-  });
+  const [contacts, setContacts] = useLocalStorage('contacts', []);
   const [filter, setFilter] = useLocalStorage('filter', '');
+  const [filteredContacts, setFilteredContacts] = useState('');
 
   useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  });
+    setFilteredContacts(() => {
+      return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter),
+      );
+    });
+  }, [contacts, filter]);
 
   const handleAddContact = contact => {
     setContacts(prevState => {
@@ -41,16 +44,7 @@ export default function App() {
   const handleFilterChange = e => {
     const { value } = e.target;
 
-    setFilter(value);
-  };
-
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter),
-    );
-
-    return filteredContacts;
+    setFilter(value.toLowerCase());
   };
 
   return (
@@ -66,7 +60,7 @@ export default function App() {
       <Section title={'Contacts'}>
         <Filter value={filter} onChange={handleFilterChange} />
         <ContactList
-          contacts={getFilteredContacts()}
+          contacts={filteredContacts}
           onDeleteContact={handleDeleteContact}
         />
       </Section>

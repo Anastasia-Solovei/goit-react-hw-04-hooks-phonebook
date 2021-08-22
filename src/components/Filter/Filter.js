@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import s from './Filter.module.css';
 import PropTypes from 'prop-types';
+
+import s from './Filter.module.css';
 
 const Filter = ({ value, onChange }) => {
   const filterInputId = uuidv4();

@@ -1,7 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import PropTypes from 'prop-types';
+
+import useLocalStorage from '../../hooks/useLocalStorage';
 import s from './ContactForm.module.css';
 
 export default function ContactForm({ onAdd, onCheckContact }) {
